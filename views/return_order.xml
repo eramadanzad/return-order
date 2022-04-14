@@ -1,0 +1,62 @@
+<odoo>
+    <record id="seq_return_order" model="ir.sequence">
+            <field name="name">Sales Order</field>
+            <field name="code">return.order</field>
+            <field name="prefix">RSO</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="return_form" model="ir.ui.view">
+        <field name="name">return.order.form</field>
+        <field name="model">return.order</field>
+        <field name="arch" type="xml">
+            <form string="return order">
+                <header>
+                    <button name="action_draft" type="object" string="draft" attrs="{'invisible': [ ('status','!=', 'confirm')]}" class="oe_highlight"/>
+                    <button name="action_confirm" type="object" string="confirm" attrs="{'invisible': [ ('status','!=', 'draft')]}" class="oe_highlight"/>
+                    <button name="action_credit_notes" type="object" string="add credit notes"  class="oe_highlight"/>
+                    <field name="status" widget="statusbar" />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="seq_num" string="" readonly="1" style="font-size:20pt;"/>
+                            <field name="customer" string="Customer"/>
+                            <field name="return_date" string="Return Date"/>
+<!--                            <field name="Status" readonly="1"/>-->
+                        </group>
+
+                    </group>
+                            <notebook>
+                                <page name="return order" string="return order">
+                                    <group>
+                                        <field name="sale_order" string="orders">
+<!--                                                <tree editable="1">-->
+<!--                                                    <field name="product_id" string="product"/>-->
+<!--                                                    <field name="description" />-->
+<!--                                                    <field name="quantity" type="numeric"/>-->
+<!--                                                    <field name="cost_price" string="cost per one" readonly="0"/>-->
+<!--                                                    <field name="Total" readonly="0"/>-->
+<!--                                                </tree>-->
+                                        </field>
+                                    </group>
+                                </page>
+                            </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="return_order_action" model="ir.actions.act_window">
+        <field name="name">return order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">return.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="return_order"
+            name="return Order"
+            parent="sale.sale_order_menu"
+            action="return_order_action"
+            sequence="2"/>
+ </odoo>
